@@ -11,7 +11,6 @@ export const store = async (req, res) => {
       return res.status(400).json({ error: err.errors })
     }
 
-    await userValidation(req.body)
     const { name, email, password } = req.body
     const hashPassword = await bcrypt.hash(password, 10)
 

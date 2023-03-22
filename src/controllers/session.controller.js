@@ -1,5 +1,6 @@
 import { prisma } from '../services/prisma'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import { sessionValidation } from '../validations/user.validation'
 
 export const loginStore = async (req, res) => {
@@ -24,5 +25,13 @@ export const loginStore = async (req, res) => {
       .status(400)
       .json({ error: 'Make sure your password or email ar correct' })
   }
-  return res.status(200).json({ name: user.name, email: user.email })
+  return res.status(200).json({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    admin: user.admin,
+    token: jwt.sign({ id: user.id }, '287f232621e638f680e03cb6d743a02d', {
+      expiresIn: '5d',
+    }),
+  })
 }
