@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  postgres-bakery:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    container_name: "postgres-bakery"
+    restart: always
+    volumes:
+      - ./data-pgsql-bakery:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+volumes:
+  data-pgsql-bakery:
