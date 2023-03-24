@@ -1,6 +1,5 @@
-import { createUser } from '../repositorys/user.repository'
+import { createUser, findUser } from '../repositorys/user.repository'
 import bcrypt from 'bcrypt'
-import { prisma } from '../services/prisma'
 import { userValidation } from '../validations/user.validation'
 
 export const store = async (req, res) => {
@@ -14,9 +13,7 @@ export const store = async (req, res) => {
     const { name, email, password } = req.body
     const hashPassword = await bcrypt.hash(password, 10)
 
-    const userExist = await prisma.user.findUnique({
-      where: { email },
-    })
+    const userExist = await findUser(email)
 
     if (userExist) {
       return res.status(400).json({ error: 'User already exists' })
