@@ -4,4 +4,5 @@ export const productValidation = Yup.object({
   name: Yup.string().required(),
   price: Yup.number().required(),
   offer: Yup.boolean(),
+  categoryId: Yup.number().required(),
 })

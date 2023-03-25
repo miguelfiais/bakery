@@ -7,7 +7,21 @@ export const createProduct = async (data) => {
 }
 
 export const getProduct = async () => {
-  return await prisma.product.findMany()
+  return await prisma.product.findMany({
+    select: {
+      id: true,
+      name: true,
+      path: true,
+      price: true,
+      offer: true,
+      Category: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  })
 }
 
 export const updateProduct = async (data) => {

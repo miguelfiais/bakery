@@ -28,4 +28,15 @@ model Product {
   offer      Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  Category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model Category {
+  id         Int       @id @default(autoincrement())
+  name       String
+  path       String
+  product    Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }

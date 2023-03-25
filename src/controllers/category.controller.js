@@ -1,31 +1,22 @@
 import {
-  createProduct,
-  deleteProduct,
-  getProduct,
-  updateProduct,
-} from '../repositorys/product.repository'
-import { productValidation } from '../validations/product.validation'
+  createCategory,
+  deleteCategory,
+  getAllCategories,
+  updateCategory,
+} from '../repositorys/category.repository'
+import { categoryValidation } from '../validations/category.validation'
 
-export const store = async (req, res) => {
+export const create = async (req, res) => {
+  const { name } = req.body
   try {
     try {
-      await productValidation.validateSync(req.body, { abortEarly: false })
+      await categoryValidation.validateSync(req.body, { abortEarly: false })
     } catch (err) {
       return res.status(400).json({ error: err.errors })
     }
-
     const { filename: path } = req.file
-    const { name, price, offer, categoryId } = req.body
-
-    const product = await createProduct({
-      name,
-      path,
-      price,
-      offer,
-      categoryId: Number(categoryId),
-    })
-
-    return res.status(201).json(product)
+    const category = await createCategory({ name, path })
+    return res.status(201).json(category)
   } catch (error) {
     return res.status(400).json({ error })
   }
@@ -33,8 +24,8 @@ export const store = async (req, res) => {
 
 export const index = async (req, res) => {
   try {
-    const product = await getProduct()
-    return res.status(200).json(product)
+    const categories = await getAllCategories()
+    return res.status(200).json(categories)
   } catch (error) {
     return res.status(400).json({ error })
   }
@@ -43,7 +34,7 @@ export const index = async (req, res) => {
 export const update = async (req, res) => {
   try {
     try {
-      await productValidation.validateSync(req.body, { abortEarly: false })
+      await categoryValidation.validateSync(req.body, { abortEarly: false })
     } catch (err) {
       return res.status(400).json({ error: err.errors })
     }
@@ -53,9 +44,9 @@ export const update = async (req, res) => {
     if (req.file) {
       path = req.file.filename
     }
-    const { name, price, offer } = req.body
+    const { name } = req.body
 
-    const product = await updateProduct({ id, name, price, offer, path })
+    const product = await updateCategory({ id: Number(id), name, path })
     return res.status(200).json(product)
   } catch (error) {
     return res.status(400).json({ error })
@@ -65,7 +56,7 @@ export const update = async (req, res) => {
 export const destroy = async (req, res) => {
   try {
     const { id } = req.params
-    await deleteProduct(id)
+    await deleteCategory(Number(id))
     return res.status(204).json()
   } catch (error) {
     return res.status(400).json({ error })
