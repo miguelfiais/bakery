@@ -6,3 +6,10 @@ export const productValidation = Yup.object({
   offer: Yup.boolean(),
   categoryId: Yup.number().required(),
 })
+
+export const updateProductValidation = Yup.object({
+  name: Yup.string(),
+  price: Yup.number(),
+  offer: Yup.boolean(),
+  categoryId: Yup.number(),
+})

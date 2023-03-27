@@ -4,7 +4,10 @@ import {
   getProduct,
   updateProduct,
 } from '../repositorys/product.repository'
-import { productValidation } from '../validations/product.validation'
+import {
+  productValidation,
+  updateProductValidation,
+} from '../validations/product.validation'
 
 export const store = async (req, res) => {
   try {
@@ -13,7 +16,9 @@ export const store = async (req, res) => {
     } catch (err) {
       return res.status(400).json({ error: err.errors })
     }
-
+    if (!req.userAdmin) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
     const { filename: path } = req.file
     const { name, price, offer, categoryId } = req.body
 
@@ -42,8 +47,13 @@ export const index = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
+    if (!req.userAdmin) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
     try {
-      await productValidation.validateSync(req.body, { abortEarly: false })
+      await updateProductValidation.validateSync(req.body, {
+        abortEarly: false,
+      })
     } catch (err) {
       return res.status(400).json({ error: err.errors })
     }
@@ -53,9 +63,19 @@ export const update = async (req, res) => {
     if (req.file) {
       path = req.file.filename
     }
-    const { name, price, offer } = req.body
-
-    const product = await updateProduct({ id, name, price, offer, path })
+    const { name, price, offer, categoryId } = req.body
+    let categoryIdNumber
+    if (categoryId) {
+      categoryIdNumber = Number(categoryId)
+    }
+    const product = await updateProduct({
+      id,
+      name,
+      price,
+      offer,
+      path,
+      categoryId: categoryIdNumber,
+    })
     return res.status(200).json(product)
   } catch (error) {
     return res.status(400).json({ error })
@@ -64,6 +84,9 @@ export const update = async (req, res) => {
 
 export const destroy = async (req, res) => {
   try {
+    if (!req.userAdmin) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
     const { id } = req.params
     await deleteProduct(id)
     return res.status(204).json()

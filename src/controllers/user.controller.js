@@ -10,7 +10,7 @@ export const store = async (req, res) => {
       return res.status(400).json({ error: err.errors })
     }
 
-    const { name, email, password } = req.body
+    const { name, email, password, admin } = req.body
     const hashPassword = await bcrypt.hash(password, 10)
 
     const userExist = await findUser(email)
@@ -19,7 +19,12 @@ export const store = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' })
     }
 
-    const user = await createUser({ name, email, password: hashPassword })
+    const user = await createUser({
+      name,
+      email,
+      password: hashPassword,
+      admin,
+    })
 
     res.status(200).json(user)
   } catch (error) {

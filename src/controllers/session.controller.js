@@ -28,8 +28,12 @@ export const loginStore = async (req, res) => {
     name: user.name,
     email: user.email,
     admin: user.admin,
-    token: jwt.sign({ id: user.id }, '287f232621e638f680e03cb6d743a02d', {
-      expiresIn: '5d',
-    }),
+    token: jwt.sign(
+      { id: user.id, admin: user.admin },
+      '287f232621e638f680e03cb6d743a02d',
+      {
+        expiresIn: '5d',
+      }
+    ),
   })
 }

@@ -4,11 +4,17 @@ import {
   getAllCategories,
   updateCategory,
 } from '../repositorys/category.repository'
-import { categoryValidation } from '../validations/category.validation'
+import {
+  categoryValidation,
+  updateCategoryValidation,
+} from '../validations/category.validation'
 
 export const create = async (req, res) => {
   const { name } = req.body
   try {
+    if (!req.userAdmin) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
     try {
       await categoryValidation.validateSync(req.body, { abortEarly: false })
     } catch (err) {
@@ -34,9 +40,14 @@ export const index = async (req, res) => {
 export const update = async (req, res) => {
   try {
     try {
-      await categoryValidation.validateSync(req.body, { abortEarly: false })
+      await updateCategoryValidation.validateSync(req.body, {
+        abortEarly: false,
+      })
     } catch (err) {
       return res.status(400).json({ error: err.errors })
+    }
+    if (!req.userAdmin) {
+      return res.status(401).json({ error: 'Unauthorized' })
     }
 
     const { id } = req.params
@@ -55,6 +66,9 @@ export const update = async (req, res) => {
 
 export const destroy = async (req, res) => {
   try {
+    if (!req.userAdmin) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
     const { id } = req.params
     await deleteCategory(Number(id))
     return res.status(204).json()

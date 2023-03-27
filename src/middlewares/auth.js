@@ -11,6 +11,8 @@ export const authMiddlewares = (req, res, next) => {
       if (error) {
         throw new Error()
       }
+      req.userId = decoded.id
+      req.userAdmin = decoded.admin
       return next()
     })
   } catch (error) {

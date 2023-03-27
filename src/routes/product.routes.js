@@ -6,14 +6,15 @@ import {
   store,
   update,
 } from '../controllers/product.controller'
+import { authMiddlewares } from '../middlewares/auth'
 
 const upload = multer({ storage })
 
 const productRoutes = (app) => {
-  app.post('/products', upload.single('file'), store)
   app.get('/products', index)
-  app.put('/products/:id', upload.single('file'), update)
-  app.delete('/products/:id', destroy)
+  app.post('/products', upload.single('file'), authMiddlewares, store)
+  app.put('/products/:id', upload.single('file'), authMiddlewares, update)
+  app.delete('/products/:id', authMiddlewares, destroy)
 }
 
 export default productRoutes
