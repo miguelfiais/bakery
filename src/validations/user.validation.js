@@ -6,8 +6,3 @@ export const userValidation = Yup.object({
   password: Yup.string().required().min(6),
   admin: Yup.boolean(),
 })
-
-export const sessionValidation = Yup.object({
-  email: Yup.string().required(),
-  password: Yup.string().required(),
-})

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { sessionValidation } from '../validations/user.validation'
-import { loginUser } from '../repositorys/user.repository'
+import { loginUser } from '../repositorys/session.repository'
+import { sessionValidation } from '../validations/session.validation'
 
 export const loginStore = async (req, res) => {
   const { email, password } = req.body
