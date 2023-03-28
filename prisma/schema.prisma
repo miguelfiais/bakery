@@ -16,27 +16,50 @@ model User {
   email      String   @unique
   password   String
   admin      Boolean  @default(false)
+  Order      Order[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model Product {
-  id         String   @id @default(uuid())
-  name       String
-  price      String
-  path       String
-  offer      Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  Category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
+  id              String            @id @default(uuid())
+  name            String            @unique
+  price           String
+  path            String
+  offer           Boolean           @default(false)
+  Category        Category          @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  OrderOnProducts OrderOnProducts[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
 }
 
 model Category {
   id         Int       @id @default(autoincrement())
-  name       String
+  name       String    @unique
   path       String
   product    Product[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
+}
+
+model Order {
+  id              String            @id @default(uuid())
+  status          String
+  orderOnProducts OrderOnProducts[]
+  User            User              @relation(fields: [userId], references: [id])
+  userId          String
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+}
+
+model OrderOnProducts {
+  Order      Order    @relation(fields: [orderId], references: [id])
+  orderId    String
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@id([productId, orderId])
 }
