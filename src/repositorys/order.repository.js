@@ -4,11 +4,7 @@ export const createOrder = async (data) => {
   return await prisma.order.create({
     data: {
       status: data.status,
-      User: {
-        connect: {
-          id: data.userId,
-        },
-      },
+      userId: data.userId,
       orderOnProducts: {
         createMany: {
           data: data.productId.map((id) => ({ productId: id })),
