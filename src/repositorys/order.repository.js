@@ -7,7 +7,10 @@ export const createOrder = async (data) => {
       userId: data.userId,
       orderOnProducts: {
         createMany: {
-          data: data.productId.map((id) => ({ productId: id })),
+          data: data.product.map((product) => ({
+            productId: product.id,
+            quantity: product.quantity,
+          })),
         },
       },
     },
@@ -35,6 +38,7 @@ export const createOrder = async (data) => {
               },
             },
           },
+          quantity: true,
         },
       },
     },
@@ -76,6 +80,7 @@ export const getAllOrders = async () => {
               },
             },
           },
+          quantity: true,
         },
       },
     },
@@ -116,6 +121,7 @@ export const getUserOrder = async (id) => {
               },
             },
           },
+          quantity: true,
         },
       },
     },

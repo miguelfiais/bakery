@@ -9,15 +9,15 @@ import {
 export const store = async (req, res) => {
   try {
     const userId = req.userId
-    const { productId } = req.body
+    const { product } = req.body
 
-    if (!productId) {
-      return res.status(400).json({ error: 'Product not found' })
+    if (!product.length) {
+      return res.status(404).json({ error: 'Product not found' })
     }
 
     const order = await createOrder({
       userId,
-      productId,
+      product,
       status: 'created',
     })
     return res.status(201).json(order)
