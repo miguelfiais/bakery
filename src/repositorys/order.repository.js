@@ -59,6 +59,7 @@ export const getAllOrders = async () => {
     select: {
       id: true,
       status: true,
+      created_at: true,
       User: {
         select: {
           id: true,
@@ -71,6 +72,7 @@ export const getAllOrders = async () => {
             select: {
               id: true,
               name: true,
+              path: true,
               price: true,
               offer: true,
               Category: {
@@ -100,25 +102,17 @@ export const getUserOrder = async (id) => {
       userId: id,
     },
     select: {
-      User: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
+      id: true,
+      created_at: true,
+      status: true,
       orderOnProducts: {
         select: {
           Product: {
             select: {
-              id: true,
               name: true,
+              path: true,
               price: true,
-              offer: true,
-              Category: {
-                select: {
-                  name: true,
-                },
-              },
+              Category: true,
             },
           },
           quantity: true,

@@ -18,7 +18,7 @@ export const store = async (req, res) => {
     const order = await createOrder({
       userId,
       product,
-      status: 'created',
+      status: 'Pedido Realizado',
     })
     return res.status(201).json(order)
   } catch (error) {
@@ -33,10 +33,12 @@ export const updateStatus = async (req, res) => {
 
   const { id } = req.params
   const { status } = req.body
-
-  const order = await updateStatusOrder({ status, id })
-
-  return res.status(200).json(order)
+  try {
+    const order = await updateStatusOrder({ status, id })
+    return res.status(200).json(order)
+  } catch (error) {
+    return res.status(400).json({ error })
+  }
 }
 
 export const index = async (req, res) => {

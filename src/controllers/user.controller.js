@@ -16,7 +16,7 @@ export const store = async (req, res) => {
     const userExist = await findUser(email)
 
     if (userExist) {
-      return res.status(400).json({ error: 'User already exists' })
+      return res.status(409).json({ error: 'User already exists' })
     }
 
     const user = await createUser({
