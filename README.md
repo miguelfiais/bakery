@@ -61,6 +61,33 @@ $ npm run dev
 
 Este projeto de backend de padaria virtual é uma solução completa para gerenciar produtos, categorias, ofertas e pedidos de clientes. Com uma autenticação segura baseada em JWT, um banco de dados PostgreSQL e o Prisma como ORM, o projeto é escalável e pode ser facilmente integrado com outros sistemas.
 
+## Colaboradores
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/miguelfiais">
+        <img width="120" src="https://avatars.githubusercontent.com/u/108070001?v=4" alt="Miguel Fiais" /><br>
+        <sub>
+          <b>Miguel Fiais</b>
+        </sub>
+      </a>
+    </all>
+    <td align="center">
+      <a href="https://github.com/RaphaelFiais">
+       <img width="120" src="https://avatars.githubusercontent.com/u/108894531?v=4" alt="Raphael Fiais" /><br>
+        <sub>
+          <b>Raphael Fiais</b>
+        </sub>
+      </a>
+    </all>
+  </tr>
+</table>
+
+
+
+
+
 
 
 
