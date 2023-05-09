@@ -5,6 +5,8 @@
 
 Este é o projeto de backend de uma padaria virtual, que oferece funcionalidades para clientes e administradores. Os administradores têm permissões especiais para gerenciar produtos, categorias, ofertas, pedidos e atualizar o status dos pedidos. Os clientes podem adicionar produtos ao carrinho, fazer pedidos, visualizar seus pedidos anteriores e verificar o status de seus pedidos atuais.
 
+- [Acesse o front-end](https://github.com/miguelfiais/bakery-interface)
+
 ## Funcionalidades:
 
 ### Administrador:
